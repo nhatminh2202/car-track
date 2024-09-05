@@ -1,10 +1,8 @@
-
+import LoginForm from "./Components/LoginForm/LoginForm";
 
 function App() {
   return (
-    <div className="bg-black">
-        <h1 className="text-7xl text-center text-blue-400">Asd</h1>
-    </div>
+    <LoginForm />
   );
 }
 
