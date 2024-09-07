@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css hoặc tệp CSS toàn cục */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Thay 'Arial' bằng phông chữ bạn muốn */
+  }
+  
