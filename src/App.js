@@ -1,18 +1,16 @@
-import React from "react";
-import Sidebar from "./layout/Sidebar";
-
+import LoginForm from "./layout/LoginForm";
+import MainLayout from "./layout/MainLayout";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-grow p-6 bg-gray-100">
-        {/* Nội dung chính của trang dashboard */}
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-      </div>
+    <div>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/home" element={<MainLayout />} />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+export default App
