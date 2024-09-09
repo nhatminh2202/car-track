@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navigate, useNavigate } from 'react-router-dom';
 import Button from "../components/button";
 import logo from "../assets/128px-Traccar-logo.svg.png";
 import {
@@ -24,6 +25,8 @@ const Sidebar = ({ onToggle }) => {
   const handleButtonClick = (buttonLabel) => {
     setActiveButton(buttonLabel);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -121,7 +124,7 @@ const Sidebar = ({ onToggle }) => {
               type="default"
               icon={<LogoutOutlined className="text-lg" />}
               active={activeButton === "Logout"}
-              onClick={() => handleButtonClick("Logout")}
+              onClick={() => navigate('/')}
             >
               Logout
             </Button>

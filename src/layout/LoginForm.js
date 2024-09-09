@@ -1,8 +1,10 @@
 import React from 'react'
-import COVER_IMAGE from 'C:/Users/This PC/cartrack/src/Components/Assets/pwa-192x192.png';
-import { Checkbox } from '@chakra-ui/react';
+import COVER_IMAGE from '../assets/pwa-192x192.png';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+
     return (
         <div className='w-full h-screen flex items-start'>
            <div className='relative w-1/2 min-h-screen bg-sky-300 flex items-center justify-center'>
@@ -37,7 +39,12 @@ const LoginForm = () => {
                 </div>
 
                 <div className='w-full flex flex-col my-4'>
-                    <button className='mt-4 px-6 py-2 bg-black text-white rounded-md'>Đăng nhập</button>
+                    <button 
+                    className='mt-4 px-6 py-2 bg-black text-white rounded-md'
+                    onClick={() => navigate('/home')}
+                    >
+                        Đăng nhập
+                    </button>
                     <button className='mt-4 px-6 py-2 bg-white border-2 border-black text-black rounded-md'>Đăng ký</button>
                 </div>
             </div>
