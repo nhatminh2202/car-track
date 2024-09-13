@@ -1,61 +1,55 @@
 import React, { useState } from 'react';
 import Button from '../components/button'; // Đảm bảo đường dẫn chính xác
+import { PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { ordersData } from '../data/orderData.js';
 
-const ordersData = {
-  Ongoing: [
-    { id: 1, customer: 'John Doe', product: 'Fentanyl', status: 'Processing', date: '2024-09-01', note: '' },
-    { id: 2, customer: 'Jane Smith', product: 'Phenolbarbital', status: 'Shipped', date: '2024-09-01', note: '' },
-  ],
-  Completed: [
-    { id: 3, customer: 'Alice Johnson', product: 'Ephedrine', status: 'Delivered', date: '2024-09-01', note: '' },
-  ],
-  Canceled: [
-    { id: 4, customer: 'Bob Brown', product: 'Methyl Ergometrin', status: 'Canceled', date: '2024-09-01', note: 'Hàng sai cần đổi' },
-  ],
-};
-
-// Chuyển đổi ordersData sang một mảng đơn hàng duy nhất
-const allOrders = Object.values(ordersData).flat();
-
+// Component Orders
 const Orders = () => {
-  const [filter, setFilter] = useState('All');
+  const [selectedTab, setSelectedTab] = useState('Ongoing');
 
-  // Lọc đơn hàng dựa trên trạng thái
-  const filteredOrders = filter === 'All' ? allOrders : allOrders.filter(order => order.status === filter);
+  const handleTabChange = (tab) => {
+    setSelectedTab(tab);
+  };
 
   return (
     <div className="bg-white rounded-lg p-4 shadow-md">
-      {/* Bộ lọc trạng thái */}
-      <div className="flex items-center space-x-2 mb-4">
-        <label htmlFor="status-filter" className="text-[14px] font-medium text-gray-700">Filter:</label>
-        <select
-          id="status-filter"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="border-2 border-solid border-[rgb(4,61,151)] p-2 rounded"
+      {/* Tab lựa chọn */}
+      <div className="flex space-x-4 mb-4">
+        <Button
+          type={selectedTab === 'Ongoing' ? 'primary' : 'default'}
+          onClick={() => handleTabChange('Ongoing')}
         >
-          <option value="All">All</option>
-          <option value="Processing">Processing</option>
-          <option value="Shipped">Shipped</option>
-          <option value="Delivered">Delivered</option>
-          <option value="Canceled">Canceled</option>
-        </select>
+          Ongoing
+        </Button>
+        <Button
+          type={selectedTab === 'NextFiveDays' ? 'primary' : 'default'}
+          onClick={() => handleTabChange('NextFiveDays')}
+        >
+          Next 5 Days
+        </Button>
       </div>
 
-      {/* Hiển thị danh sách đơn hàng */}
-      <div className="flex flex-col space-y-2">
-        {filteredOrders.map((order) => (
-          <div
-            key={order.id}
-            className="bg-gray-50 p-4 rounded border border-gray-200"
-          >
+      {/* Hiển thị danh sách đơn hàng dựa trên tab đã chọn */}
+      <div className="space-y-4">
+        {ordersData[selectedTab].map((order) => (
+          <div key={order.id} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <div className="flex justify-between items-center">
-              <p className="text-[10px] text-gray-500 italic">{order.date}</p>
-              <p className="text-[12px] font-bold text-red-500">{order.status}</p>
+              <p className="text-[10px] text-gray-500 italic">ID: {order.id}</p>
+              <p className={`text-[12px] font-bold ${order.daysLeft.includes('Past') ? 'text-red-500' : 'text-green-500'}`}>{order.daysLeft}</p>
             </div>
             <p className="text-[20px] font-bold text-blue-700 mb-1">{order.product}</p>
-            <p className="text-[12px] text-black">{order.customer}</p>
-            <div className="border-t mt-2 pt-2 text-[12px] italic">{order.note}</div>
+            <p className="text-[14px] font-bold text-gray-500 mb-2">{order.plate}</p>
+            <hr className="border-gray-300 border-solid mb-1" />
+            <div className="flex items-center mt-2">
+              <div className='flex items-center'>
+                <UserOutlined />
+                <p className="text-[14px] text-black ml-2">{order.driver.name}</p>
+              </div>
+              <div className='flex items-center ml-auto'>
+                <PhoneOutlined />
+                <p className="text-[14px] text-gray-500 ml-2">{order.driver.phone}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
